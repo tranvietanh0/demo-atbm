@@ -1,0 +1,10 @@
+flowchart LR
+    U[student on CL01] -->|1. Login| KDC[DC01\nAD DS + DNS + KDC]
+    KDC -->|2. TGT| U
+    U -->|3. Access \\dc01.demo.local\\SYSVOL| CIFS[CIFS on DC01]
+    U -->|4. Request service ticket for cifs/dc01| KDC
+    KDC -->|5. Service ticket for cifs/dc01| U
+
+    H[Host crack\nWSL or Kali] -->|6. Request TGS for svc_sql SPN using student creds| KDC
+    KDC -->|7. Roastable TGS| H
+    H -->|8. Offline crack| SVC[svc_sql\nSPN account]
